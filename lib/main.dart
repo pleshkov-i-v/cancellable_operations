@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'Cancellable operations',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textTheme: TextTheme(
+          headlineMedium: const TextStyle(color: Colors.black, fontSize: 30),
+          bodyMedium: const TextStyle(color: Colors.black, fontSize: 20),
+          labelMedium: const TextStyle(color: Colors.black, fontSize: 20),
+        ),
       ),
       home: const MyHomePage(title: 'Cancellable operations'),
     );
