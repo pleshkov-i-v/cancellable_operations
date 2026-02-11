@@ -13,23 +13,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Future? _operation;
 
   void _startOperation() {
-    _operation = _operationFunction();
+    setState(() {
+      _counter = 0;
+      _operation = _operationFunction();
+    });
   }
 
   void _stopOperation() {
-    _operation = null;
+    setState(() {
+      _operation = null;
+    });
   }
 
   Future<void> _operationFunction() async {
     for (int i = 0; i < 10; i++) {
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 500));
       setState(() {
         _counter = i;
       });
     }
-    setState(() {
-      _operation = null;
-    });
+    _stopOperation();
   }
 
   @override
