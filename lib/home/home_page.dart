@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:async/async.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -10,17 +11,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  Future? _operation;
+  CancelableOperation? _operation;
 
   void _startOperation() {
     setState(() {
       _counter = 0;
-      _operation = _operationFunction();
+      _operation = CancelableOperation.fromFuture(_operationFunction());
     });
   }
 
   void _stopOperation() {
     setState(() {
+      _operation?.cancel();
       _operation = null;
     });
   }
