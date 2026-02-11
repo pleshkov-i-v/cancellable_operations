@@ -11,23 +11,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   Future? _operation;
+  CancelationToken? _cancelationToken;
 
   void _startOperation() {
+    if (_operation != null) {
+      _stopOperation();
+    }
     setState(() {
       _counter = 0;
-      _operation = _operationFunction();
+      final token = CancelationToken();
+      _cancelationToken = token;
+      _operation = _operationFunction(token);
     });
   }
 
   void _stopOperation() {
     setState(() {
+      _cancelationToken?.cancel();
       _operation = null;
     });
   }
 
-  Future<void> _operationFunction() async {
+  Future<void> _operationFunction(CancelationToken cancelationToken) async {
     for (int i = 0; i < 10; i++) {
       await Future.delayed(const Duration(milliseconds: 500));
+      if (cancelationToken.isCanceled) return;
       setState(() {
         _counter = i;
       });
@@ -76,4 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+class CancelationToken {
+  bool _isCanceled = false;
+  bool get isCanceled => _isCanceled;
+  void cancel() => _isCanceled = true;
 }
