@@ -1,78 +1,21 @@
+import 'package:cancellable_operations/home/home_page_content.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  Future? _operation;
-
-  void _startOperation() {
-    setState(() {
-      _counter = 0;
-      _operation = _operationFunction();
-    });
-  }
-
-  void _stopOperation() {
-    setState(() {
-      _operation = null;
-    });
-  }
-
-  Future<void> _operationFunction() async {
-    for (int i = 0; i < 10; i++) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      setState(() {
-        _counter = i;
-      });
-    }
-    _stopOperation();
-  }
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text('Cancellable operations'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _operation != null
-                  ? 'Operation in progress'
-                  : 'There is no operation in progress',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: HomePageContent(),
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: _startOperation,
-            tooltip: 'Start',
-            child: const Text('Start'),
-          ),
-          const SizedBox(width: 20),
-          FloatingActionButton(
-            onPressed: _stopOperation,
-            tooltip: 'Stop',
-            child: const Text('Stop'),
-          ),
-        ],
       ),
     );
   }

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           labelMedium: const TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
-      home: const MyHomePage(title: 'Cancellable operations'),
+      home: const MyHomePage(),
     );
   }
 }
